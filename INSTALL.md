@@ -24,7 +24,7 @@ It is best practice to run this in an isolated environment.
 
 ## Step 3: Install Dependencies
 The project relies on scikit-learn for the machine learning model and numpy/pandas for data handling.
-`pip install scikit-learn numpy pandas`
+`pip install scikit-learn numpy pandas streamlit`
 
 ## Step 4: Train the Initial Model
 Before running predictions, you must train the model using the provided query logs to generate the model.pkl file.
