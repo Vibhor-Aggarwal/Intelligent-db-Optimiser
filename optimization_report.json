@@ -1,0 +1,565 @@
+[
+  {
+    "query": "SELECT id, name, email FROM users WHERE id = 42",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 47
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: id. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_id ON table_name(id)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "users"
+    ],
+    "row_number": 1
+  },
+  {
+    "query": "SELECT * FROM orders WHERE order_date > '2024-01-01' AND order_date < '2024-12-31'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 82
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from orders to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM orders",
+      "\ud83d\udcca Create indexes on WHERE clause columns: order_date. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_order_date ON table_name(order_date)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "orders"
+    ],
+    "row_number": 2
+  },
+  {
+    "query": "SELECT COUNT(*) FROM transactions WHERE user_id = 5",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 51
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: user_id. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_user_id ON table_name(user_id)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "transactions"
+    ],
+    "row_number": 3
+  },
+  {
+    "query": "SELECT product_id, SUM(quantity) FROM order_items GROUP BY product_id",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 69
+    },
+    "recommendations": [
+      "\ud83d\udcca Create a composite index on GROUP BY columns (product_id) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "order_items"
+    ],
+    "row_number": 4
+  },
+  {
+    "query": "SELECT u.id, u.name, COUNT(o.id) FROM users u LEFT JOIN orders o ON u.id = o.user_id GROUP BY u.id, u.name",
+    "analysis": {
+      "num_joins": 1,
+      "has_where_clause": false,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 106
+    },
+    "recommendations": [
+      "\ud83d\udd11 JOIN conditions found: u.id = o.user_id GROUP BY u.id, u.name. Ensure both sides of JOIN conditions have indexes for optimal performance.",
+      "\ud83d\udcca Create a composite index on GROUP BY columns (u.id, u.name) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "users",
+      "orders"
+    ],
+    "row_number": 5
+  },
+  {
+    "query": "SELECT * FROM logs WHERE status = 'ERROR'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 41
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from logs to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM logs",
+      "\ud83d\udcca Create indexes on WHERE clause columns: status. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_status ON table_name(status)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "logs"
+    ],
+    "row_number": 6
+  },
+  {
+    "query": "SELECT id, title FROM posts WHERE author_id = 12 AND published = true",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 69
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: author_id, published. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_author_id ON table_name(author_id)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "posts"
+    ],
+    "row_number": 7
+  },
+  {
+    "query": "SELECT * FROM products WHERE category = 'Electronics' ORDER BY price DESC LIMIT 50",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 82
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from products to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM products",
+      "\ud83d\udcca Create indexes on WHERE clause columns: category. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_category ON table_name(category)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udcca Create an index on ORDER BY columns (price) to avoid expensive sorting operations."
+    ],
+    "optimization_priority": 4,
+    "tables": [
+      "products"
+    ],
+    "row_number": 8
+  },
+  {
+    "query": "SELECT * FROM customers",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 23
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from customers to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM customers"
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "customers"
+    ],
+    "row_number": 9
+  },
+  {
+    "query": "SELECT DATE(created_at), COUNT(*) FROM events GROUP BY DATE(created_at)",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 71
+    },
+    "recommendations": [
+      "\ud83d\udcca Create a composite index on GROUP BY columns (DATE(created_at)) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "events"
+    ],
+    "row_number": 10
+  },
+  {
+    "query": "SELECT u.name, u.email FROM users u WHERE u.country = 'US' AND u.status = 'active'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 82
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: status, country. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_status ON table_name(status)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "users"
+    ],
+    "row_number": 11
+  },
+  {
+    "query": "SELECT * FROM invoices WHERE invoice_number = 'INV-2024-001234'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 63
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from invoices to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM invoices",
+      "\ud83d\udcca Create indexes on WHERE clause columns: invoice_number. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_invoice_number ON table_name(invoice_number)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "invoices"
+    ],
+    "row_number": 12
+  },
+  {
+    "query": "SELECT p.id, p.name, c.category_name FROM products p INNER JOIN categories c ON p.category_id = c.id WHERE p.price > 100",
+    "analysis": {
+      "num_joins": 1,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 120
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: price. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_price ON table_name(price)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udd11 JOIN conditions found: p.category_id = c.id WHERE p.price > 100. Ensure both sides of JOIN conditions have indexes for optimal performance."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "products",
+      "categories"
+    ],
+    "row_number": 13
+  },
+  {
+    "query": "SELECT * FROM audit_logs",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 24
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from audit_logs to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM audit_logs"
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "audit_logs"
+    ],
+    "row_number": 14
+  },
+  {
+    "query": "SELECT employee_id, department, AVG(salary) FROM payroll WHERE year = 2024 GROUP BY employee_id, department",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 107
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: year. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_year ON table_name(year)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udcca Create a composite index on GROUP BY columns (employee_id, department) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "payroll"
+    ],
+    "row_number": 15
+  },
+  {
+    "query": "SELECT * FROM sessions WHERE user_id = 99 AND last_activity > DATEADD(hour, -24, GETDATE())",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 91
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from sessions to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM sessions",
+      "\ud83d\udcca Create indexes on WHERE clause columns: user_id, last_activity. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_user_id ON table_name(user_id)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "sessions"
+    ],
+    "row_number": 16
+  },
+  {
+    "query": "SELECT product_name, units_sold FROM sales WHERE region = 'North America' AND sale_date BETWEEN '2024-06-01' AND '2024-06-30'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 125
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: region, sale_date. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_region ON table_name(region)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "sales"
+    ],
+    "row_number": 17
+  },
+  {
+    "query": "SELECT COUNT(DISTINCT user_id) FROM page_views WHERE page_url LIKE '/products/%'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 80
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: page_url. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_page_url ON table_name(page_url)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "page_views"
+    ],
+    "row_number": 18
+  },
+  {
+    "query": "SELECT id, username FROM users WHERE username = 'john_doe'",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 58
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: username. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_username ON table_name(username)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "users"
+    ],
+    "row_number": 19
+  },
+  {
+    "query": "SELECT * FROM notifications WHERE read = 0 AND user_id IN (1,2,3,4,5,6,7,8,9,10)",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 80
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from notifications to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM notifications",
+      "\ud83d\udcca Create indexes on WHERE clause columns: user_id, read. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_user_id ON table_name(user_id)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "notifications"
+    ],
+    "row_number": 20
+  },
+  {
+    "query": "SELECT department, COUNT(*) as emp_count, AVG(salary) FROM employees GROUP BY department HAVING COUNT(*) > 5",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 108
+    },
+    "recommendations": [
+      "\ud83d\udcca Create a composite index on GROUP BY columns (department) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "employees"
+    ],
+    "row_number": 21
+  },
+  {
+    "query": "SELECT * FROM raw_data",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 22
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from raw_data to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM raw_data"
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "raw_data"
+    ],
+    "row_number": 22
+  },
+  {
+    "query": "SELECT order_id, customer_name, total_amount FROM orders WHERE total_amount > (SELECT AVG(total_amount) FROM orders) LIMIT 100",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 126
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: total_amount. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_total_amount ON table_name(total_amount)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udd04 Query contains 1 subquery(ies). Consider using JOINs or CTEs (Common Table Expressions) instead of subqueries for better performance. Example: WITH cte AS (SELECT ...) SELECT ... FROM cte"
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "orders",
+      "orders"
+    ],
+    "row_number": 23
+  },
+  {
+    "query": "SELECT c.customer_id, c.name, COUNT(o.order_id) as order_count FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id GROUP BY c.customer_id, c.name",
+    "analysis": {
+      "num_joins": 1,
+      "has_where_clause": false,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 162
+    },
+    "recommendations": [
+      "\ud83d\udd11 JOIN conditions found: c.customer_id = o.customer_id GROUP BY c.customer_id, c.name. Ensure both sides of JOIN conditions have indexes for optimal performance.",
+      "\ud83d\udcca Create a composite index on GROUP BY columns (c.customer_id, c.name) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "customers",
+      "orders"
+    ],
+    "row_number": 24
+  },
+  {
+    "query": "SELECT api_endpoint, COUNT(*) as call_count FROM api_logs WHERE timestamp > DATEADD(day, -7, GETDATE()) GROUP BY api_endpoint",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 125
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: timestamp. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_timestamp ON table_name(timestamp)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udcca Create a composite index on GROUP BY columns (api_endpoint) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "api_logs"
+    ],
+    "row_number": 25
+  },
+  {
+    "query": "SELECT * FROM temp_staging_table",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": false,
+      "uses_select_star": true,
+      "indexes_used": [],
+      "query_length": 32
+    },
+    "recommendations": [
+      "\u26a0\ufe0f  Replace 'SELECT *' with specific columns from temp_staging_table to reduce network traffic and improve query performance. Example: SELECT id, name, email FROM temp_staging_table"
+    ],
+    "optimization_priority": 1,
+    "tables": [
+      "temp_staging_table"
+    ],
+    "row_number": 26
+  },
+  {
+    "query": "SELECT id, name, email FROM users WHERE created_at > '2024-01-01' ORDER BY created_at DESC LIMIT 1000",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 101
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: created_at. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_created_at ON table_name(created_at)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udcca Create an index on ORDER BY columns (created_at) to avoid expensive sorting operations."
+    ],
+    "optimization_priority": 3,
+    "tables": [
+      "users"
+    ],
+    "row_number": 27
+  },
+  {
+    "query": "SELECT product_id, product_name FROM products WHERE active = 1 AND stock > 0",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 76
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: stock, active. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_stock ON table_name(stock)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them."
+    ],
+    "optimization_priority": 2,
+    "tables": [
+      "products"
+    ],
+    "row_number": 28
+  },
+  {
+    "query": "SELECT user_id, COUNT(*) as login_count FROM login_history WHERE login_date >= DATEADD(month, -3, GETDATE()) GROUP BY user_id ORDER BY login_count DESC",
+    "analysis": {
+      "num_joins": 0,
+      "has_where_clause": true,
+      "uses_select_star": false,
+      "indexes_used": [],
+      "query_length": 151
+    },
+    "recommendations": [
+      "\ud83d\udcca Create indexes on WHERE clause columns: login_date. Indexes on these columns will significantly speed up filtering: e.g., CREATE INDEX idx_login_date ON table_name(login_date)",
+      "\ud83d\udd0d No indexes are currently being used in this query. Ensure indexes exist on filtered columns and verify the query optimizer is using them.",
+      "\ud83d\udcc8 Query uses ORDER BY (login_count DESC) without LIMIT. If you don't need all rows, consider adding LIMIT to reduce execution time. Create an index on ORDER BY columns if sorting large datasets.",
+      "\ud83d\udcca Create an index on ORDER BY columns (login_count) to avoid expensive sorting operations.",
+      "\ud83d\udcca Create a composite index on GROUP BY columns (user_id) to optimize aggregation queries. This can significantly reduce execution time."
+    ],
+    "optimization_priority": 5,
+    "tables": [
+      "login_history"
+    ],
+    "row_number": 29
+  }
+]
